@@ -31,10 +31,10 @@ public class UserDAO {
             // Password: 1
             //DBI:
             // SELECT * FROM [dbo].[tblUsers] WHERE [userID]='x' or 1=1 --' AND [password]='hacker';
-            String sql = "SELECT * FROM tblUsers WHERE userID='" + id + "'";
+            String sql = "SELECT * FROM tblUsers WHERE userID=?";
             System.out.println(sql);
             PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(0, id);
+            pst.setString(1, id);
             ResultSet rs = pst.executeQuery(sql);
 
             while (rs.next()) {
