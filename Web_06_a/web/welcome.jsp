@@ -1,6 +1,6 @@
 <%-- 
-    Document   : a.jsp
-    Created on : Jan 8, 2026, 4:55:29 PM
+    Document   : welcome.jsp
+    Created on : Jan 22, 2026, 3:59:14 PM
     Author     : PHI LONG
 --%>
 
@@ -14,17 +14,16 @@
     </head>
     <body>
         <%
-            UserDTO user = (UserDTO)session.getAttribute("user");
-       
-            if (user!=null){
+            UserDTO u = (UserDTO) session.getAttribute("user");
+            if (u != null) {
         %>
-            Welcome <%=user.getFullName()%>,<br/>
-            <a href="MainController?action=logout">Logout</a> <br/>
-           
-        <%
-            } else {
+        <h1> Welcome, <%=u.getFullName()%></h1>
+        <a href="MainController?action=logout&">Logout</a><br/>
+        <a href="search.jsp">Search</a>
+        <%} else {
                 response.sendRedirect("login.jsp");
             }
+            
         %>
     </body>
 </html>
