@@ -2,24 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package control;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.UniversityDAO;
-import models.UniversityDTO;
+import javax.servlet.http.HttpSession;
+import model.UserDAO;
+import model.UserDTO;
 
 /**
  *
  * @author PHI LONG
  */
-public class SearchController extends HttpServlet {
+public class LoginController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,23 +32,36 @@ public class SearchController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        String keywords = request.getParameter("keywords");
-        if (keywords == null) {
-            keywords = "";
-        }
+        String url = "";
+        HttpSession session = request.getSession();
 
-        System.out.println(keywords);
-        UniversityDAO udao = new UniversityDAO();
-        ArrayList<UniversityDTO> list = new ArrayList<>();
-        if (keywords.trim().length() > 0) {
-            list = udao.filterByName(keywords);
+        if (session.getAttribute("user") == null) {
+
+            String txtUsername = request.getParameter("txtUsername");
+            String txtPassword = request.getParameter("txtPassword");
+
+            UserDAO udao = new UserDAO();
+            UserDTO user = udao.login(txtUsername, txtPassword);
+
+            if (user != null) {
+                if (user.isStatus()) {
+                    url = "welcome.jsp";
+                    session.setAttribute("user", user);
+                } else {
+                    url = "e403.jsp";
+                }
+            } else {
+                url = "login.jsp";
+                request.setAttribute("message", "Invalid username or password!");
+            }
+
+        } else {
+            url = "welcome.jsp";
         }
-        request.setAttribute("list", list);
-        request.setAttribute("keyword", keywords);
-        String url = "search.jsp";
+        // Chuyen trang
         RequestDispatcher rd = request.getRequestDispatcher(url);
         rd.forward(request, response);
     }

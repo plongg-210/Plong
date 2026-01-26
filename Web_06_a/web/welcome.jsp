@@ -1,10 +1,10 @@
 <%-- 
-    Document   : welcome.jsp
-    Created on : Jan 22, 2026, 3:59:14 PM
+    Document   : welcome
+    Created on : Jan 26, 2026, 1:16:16 PM
     Author     : PHI LONG
 --%>
 
-<%@page import="models.UserDTO"%>
+<%@page import="model.UserDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,16 +14,17 @@
     </head>
     <body>
         <%
-            UserDTO u = (UserDTO) session.getAttribute("user");
-            if (u != null) {
+            UserDTO u = (UserDTO)session.getAttribute("user");
+            if (u!=null){       
         %>
-        <h1> Welcome, <%=u.getFullName()%></h1>
-        <a href="MainController?action=logout&">Logout</a><br/>
-        <a href="search.jsp">Search</a>
-        <%} else {
+                <h1>Welcome, <%=u.getFullName()%> </h1>
+                <a href="MainController?action=logout&">Logout</a><br/>
+                <a href="search.jsp">Search</a>
+        <%  } else {
                 response.sendRedirect("login.jsp");
             }
-            
         %>
+        
+        
     </body>
 </html>

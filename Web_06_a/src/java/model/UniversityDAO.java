@@ -2,8 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package models;
-
+package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,22 +12,22 @@ import utils.DbUtils;
 
 /**
  *
- * @author PHI LONG
+ * @author tungi
  */
 public class UniversityDAO {
 
     public UniversityDAO() {
     }
-    
-    public ArrayList<UniversityDTO> searchByColum(String column, String value){
+
+    public ArrayList<UniversityDTO> searchByColum(String column, String value) {
         ArrayList<UniversityDTO> result = new ArrayList<>();
         try {
             Connection conn = DbUtils.getConnection();
-           String sql = "SELECT * FROM tblUniverity WHERE " + column + " = ?";
+            String sql = "SELECT * FROM tblUniversity WHERE " + column + "=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, value);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 String id = rs.getString("id");
                 String name = rs.getString("name");
                 String shortName = rs.getString("shortName");
@@ -41,25 +40,25 @@ public class UniversityDAO {
                 int totalStudents = rs.getInt("totalStudents");
                 int totalFaculties = rs.getInt("totalFaculties");
                 boolean isDraft = rs.getBoolean("isDraft");
-                
+
                 UniversityDTO u = new UniversityDTO(id, name, shortName, description, foundedYear, address, city, region, type, totalStudents, totalFaculties, isDraft);
                 result.add(u);
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return result;
     }
-    
-    public ArrayList<UniversityDTO> filterByColum(String column, String value){
+
+    public ArrayList<UniversityDTO> filterByColum(String column, String value) {
         ArrayList<UniversityDTO> result = new ArrayList<>();
         try {
             Connection conn = DbUtils.getConnection();
-            String sql = "SELECT * FROM tblUniverity WHERE " + column + " = ?";
+            String sql = "SELECT * FROM tblUniversity WHERE " + column + " LIKE ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, value);
+            ps.setString(1, "%" + value + "%");
+            System.out.println(ps.toString());
             ResultSet rs = ps.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 String id = rs.getString("id");
                 String name = rs.getString("name");
                 String shortName = rs.getString("shortName");
@@ -72,7 +71,7 @@ public class UniversityDAO {
                 int totalStudents = rs.getInt("totalStudents");
                 int totalFaculties = rs.getInt("totalFaculties");
                 boolean isDraft = rs.getBoolean("isDraft");
-                
+
                 UniversityDTO u = new UniversityDTO(id, name, shortName, description, foundedYear, address, city, region, type, totalStudents, totalFaculties, isDraft);
                 result.add(u);
             }
@@ -81,16 +80,17 @@ public class UniversityDAO {
         }
         return result;
     }
-    
-    public ArrayList<UniversityDTO> searchByID(String ID){
+
+    public ArrayList<UniversityDTO> searchByID(String ID) {
         return searchByColum("id", ID);
     }
-    
-    public ArrayList<UniversityDTO> searchByName(String name){
+
+    public ArrayList<UniversityDTO> searchByName(String name) {
         return searchByColum("name", name);
     }
-    
-    public ArrayList<UniversityDTO> filterByName(String name){
+
+    public ArrayList<UniversityDTO> filterByName(String name) {
         return filterByColum("name", name);
     }
+
 }

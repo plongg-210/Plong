@@ -2,18 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package models;
+package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import model.UserDTO;
+
 import utils.DbUtils;
 
 /**
  *
- * @author ACER
+ * @author tungi
  */
 public class UserDAO {
 
@@ -24,6 +26,11 @@ public class UserDAO {
         UserDTO user = null;
         try {
             Connection conn = DbUtils.getConnection();
+            //tk and mk de test:
+            // Username: x' or 1=1 -- 
+            // Password: 1
+            //DBI:
+            // SELECT * FROM [dbo].[tblUsers] WHERE [userID]='x' or 1=1 --' AND [password]='hacker';
             String sql = "SELECT * FROM tblUsers WHERE userID=?";
             System.out.println(sql);
             PreparedStatement pst = conn.prepareStatement(sql);
@@ -36,22 +43,22 @@ public class UserDAO {
                 String password = rs.getString("password");
                 String roleID = rs.getString("roleID");
                 boolean status = rs.getBoolean("status");
-                user = new UserDTO(userID, password, fullName, roleID, status);
+                user = new UserDTO(userID, fullName, password, roleID, status);
             }
-            System.out.println(user);
-            return user;
         } catch (Exception e) {
             return null;
         }
-
+        System.out.println(user);
+        return user;
     }
 
     public UserDTO login(String username, String password) {
         UserDTO user = searchById(username);
         if (user != null && user.getPassword().equals(password)) {
             return user;
+        } else {
+            return null;
         }
-        return null;
-
     }
+
 }

@@ -1,6 +1,6 @@
 <%-- 
     Document   : index
-    Created on : Jan 8, 2026, 4:15:59 PM
+    Created on : Jan 8, 2026, 4:17:58 PM
     Author     : PHI LONG
 --%>
 
@@ -12,7 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="login.jsp">Login</a>
-        
+        <a href="login.jsp">login</a>
     </body>
 </html>
