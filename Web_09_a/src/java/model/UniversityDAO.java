@@ -115,7 +115,7 @@ public class UniversityDAO {
          int result = 0;
         try {
             Connection conn = DbUtils.getConnection();
-            String sql = "INSERT into tblUniversity value(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            String sql = "INSERT into tblUniversity values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, u.getId());
             ps.setString(2, u.getName());
