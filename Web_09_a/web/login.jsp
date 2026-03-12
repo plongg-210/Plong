@@ -22,7 +22,7 @@
             <input type="submit" value="Login" />
         </form>
         <c:if test="not empty message">
-            <span style="color:red"> ${message}</span>
+            ${message}
         </c:if>
         
     </body>

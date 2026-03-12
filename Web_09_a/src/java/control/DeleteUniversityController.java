@@ -36,21 +36,26 @@ public class DeleteUniversityController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         String keywords = request.getParameter("keywords");
+        String id = request.getParameter("id");
         if (keywords == null) {
             keywords = "";
         }
 
-        String id = request.getParameter("id");
+        
         if (id == null) {
             id = "";
         }
-        System.out.println("id: "+id);
+        
         System.out.println(keywords);
         UniversityDAO udao = new UniversityDAO();
 
         // Xoa
         if(!id.isEmpty()){
-            udao.softDelete(id);
+            boolean check = udao.softDelete(id);
+            if(check)
+                request.setAttribute("msg", "Deleted!");
+            else
+                request.setAttribute("msg", "Error, can not delete: "+id);
         }
         
         // Tim kiem

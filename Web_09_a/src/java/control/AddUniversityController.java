@@ -34,10 +34,10 @@ public class AddUniversityController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        
-        String error="";
-        String msg="";
-        String url="";
+
+        String error = "";
+        String msg = "";
+        String url = "";
         try {
             String id = request.getParameter("id");
             String name = request.getParameter("name");
@@ -51,105 +51,72 @@ public class AddUniversityController extends HttpServlet {
             String s_totalStudents = request.getParameter("totalStudents");
             String s_totalFaculties = request.getParameter("totalFaculties");
             String s_isDraft = request.getParameter("isDraft");
-            
+
             id = id.trim();
-            if(id.isEmpty()){
+            if (id.isEmpty()) {
                 error += ("Chua nhap Id <br/>");
             }
             name = name.trim();
-            if(name.isEmpty()){
+            if (name.isEmpty()) {
                 error += ("Chua nhap Name <br/>");
             }
-            shortName = shortName.trim();
-            if(shortName.isEmpty()){
-                error += ("Chua nhap shortName <br/>");
-            }
-            description = description.trim();
-            if(description.isEmpty()){
-                error += ("Chua nhap description <br/>");
-            }
-            s_foundedYear = s_foundedYear.trim();
-            if(s_foundedYear.isEmpty()){
-                error += ("Chua nhap foundedYear <br/>");
-            }
-            address = address.trim();
-            if(address.isEmpty()){
-                error += ("Chua nhap address <br/>");
-            }
-            city = city.trim();
-            if(city.isEmpty()){
-                error += ("Chua nhap city <br/>");
-            }
-            region = region.trim();
-            if(region.isEmpty()){
-                error += ("Chua nhap region <br/>");
-            }
-            type = type.trim();
-            if(type.isEmpty()){
-                error += ("Chua nhap type <br/>");
-            }
-            s_totalStudents = s_totalStudents.trim();
-            if(s_totalStudents.isEmpty()){
-                error += ("Chua nhap totalStudents <br/>");
-            }
-            s_totalFaculties = s_totalFaculties.trim();
-            if(s_totalFaculties.isEmpty()){
-                error += ("Chua nhap totalFaculties <br/>");
-            }
-            
+            /*
+            bat them loi
+             */
             UniversityDAO udao = new UniversityDAO();
             UniversityDTO u = udao.searchByID(id);
-            if(u != null){
-                error += ("ID da ton tai, vui long nhap ID khac! <br/>");
+            if (u != null) {
+                error += ("ID da ton tai, vui long nhap ID khac!<br/>");
             }
-            
+
             int foundedYear = 0;
             try {
                 foundedYear = Integer.parseInt(s_foundedYear);
-                if(foundedYear < 0){
-                    error += ("Nam thanh lap phai la so duong! <br/>");
+                if (foundedYear < 0) {
+                    error += ("Nam thanh lap phai la so nguyen duong!<br/>");
                 }
             } catch (Exception e) {
-                error += ("Nam thanh lap phai la so nguyen! <br/>");
+                error += ("Nam thanh lap phai la so nguyen!<br/>");
             }
-            
+
             int totalStudents = 0;
             try {
                 totalStudents = Integer.parseInt(s_totalStudents);
-                if(totalStudents < 0){
-                    error += ("Tong so sinh vien phai la so duong! <br/>");
+                if (totalStudents < 0) {
+                    error += ("Tong so sinh vien phai la so nguyen duong!<br/>");
                 }
             } catch (Exception e) {
-                error += ("Tong so sinh vien phai la so nguyen! <br/>");
+                error += ("Tong so sinh vien phai la so nguyen!<br/>");
             }
-            
+
             int totalFaculties = 0;
             try {
                 totalFaculties = Integer.parseInt(s_totalFaculties);
-                if(totalFaculties < 0){
-                    error += ("So nhan vien phai la so duong! <br/>");
+                if (totalFaculties < 0) {
+                    error += ("So nhan vien phai la so nguyen duong!<br/>");
                 }
             } catch (Exception e) {
-                error += ("So nhan vien phai la so nguyen! <br/>");
+                error += ("So nguyen duong phai la so nguyen!<br/>");
             }
-            
-            boolean isDraft = (s_isDraft.equals("1"))?true:false;
-            
+
+            boolean isDraft = (s_isDraft.equals("1")) ? true : false;
+
             u = new UniversityDTO(id, name, shortName, description, foundedYear, address, city, region, type, totalStudents, totalFaculties, isDraft);
-            if(error.isEmpty()){
-                // neu ko loi
-                if(udao.add(u)){
+            if (error.isEmpty()) {
+                // khong co loi
+                if (udao.add(u)) {
                     msg = "Da them University thanh cong!";
-                }else{
+                } else {
                     error += "Gap loi, khong the them University!";
                     request.setAttribute("u", u);
                 }
                 request.setAttribute("msg", msg);
-            }else{
+            } else {
                 request.setAttribute("u", u);
             }
             request.setAttribute("error", error);
             url = "university-form.jsp";
+
         } catch (Exception e) {
             e.printStackTrace();
         }

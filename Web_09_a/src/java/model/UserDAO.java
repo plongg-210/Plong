@@ -10,33 +10,24 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import model.UserDTO;
-
 import utils.DbUtils;
 
-/**
- *
- * @author tungi
- */
 public class UserDAO {
 
     public UserDAO() {
     }
 
-    public UserDTO searchById(String id) {
-        UserDTO user = null;
+    public UserDTO searchById(String username) {
         try {
             Connection conn = DbUtils.getConnection();
-            //tk and mk de test:
-            // Username: x' or 1=1 -- 
-            // Password: 1
-            //DBI:
-            // SELECT * FROM [dbo].[tblUsers] WHERE [userID]='x' or 1=1 --' AND [password]='hacker';
-            String sql = "SELECT * FROM tblUsers WHERE userID=?";
+            String sql = "SELECT * FROM tblUsers "
+                    + " WHERE userID=?";
             System.out.println(sql);
             PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, id);
+            pst.setString(1, username);
             ResultSet rs = pst.executeQuery();
 
+            UserDTO user = null;
             while (rs.next()) {
                 String userID = rs.getString("userID");
                 String fullName = rs.getString("fullName");
@@ -45,20 +36,21 @@ public class UserDAO {
                 boolean status = rs.getBoolean("status");
                 user = new UserDTO(userID, fullName, password, roleID, status);
             }
+
+            System.out.println(user);
+
+            return user;
         } catch (Exception e) {
             return null;
         }
-        System.out.println(user);
-        return user;
     }
 
     public UserDTO login(String username, String password) {
-        UserDTO user = searchById(username);
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
-        } else {
-            return null;
+        UserDTO u = searchById(username);
+        if (u != null && u.getPassword().equals(password)) {
+            return u;
         }
+        return null;
     }
 
 }

@@ -14,20 +14,16 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <c:choose>
-            <c:when test="${not empty user}">
-                <h1>
-                    Welcome, ${user.fullName}
-                </h1>
-                <a href="MainController?action=logout">Logout</a><br/>
-                <a href="search.jsp">Search</a>
-                <a href="university-form.jsp">Add</a><br/>
-                
-            </c:when>
-            <c:otherwise>
-                <c:redirect url="login.jsp"/>
-            </c:otherwise>
-        </c:choose>
+        <c:if test="${not empty user}">
+            <h1>Welcome, ${user.fullName}</h1>
+
+            <a href="MainController?action=logout">Logout</a><br/>
+            <a href="search.jsp">Search</a>
+        </c:if>
+
+        <c:if test="${empty user}">
+            <c:redirect url="login.jsp"/>
+        </c:if>
         <%--
         code cu trc khi doi
             UserDTO u = (UserDTO)session.getAttribute("user");

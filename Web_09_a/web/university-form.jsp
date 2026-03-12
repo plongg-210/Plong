@@ -38,5 +38,5 @@
         <p style="color: green">${msg}</p>
         <p style="color: red">${error}</p>
 
-        </body>
-        </html>
+    </body>
+</html>
