@@ -92,7 +92,7 @@ public class UniversityDAO {
     public ArrayList<UniversityDTO> filterByName(String name) {
         return filterByColum("name", name);
     }
-    public boolean softDelete(String id) {
+     public boolean softDelete(String id) {
         try {
             Connection conn = DbUtils.getConnection();
             String sql = "UPDATE tblUniversity SET status=0 WHERE id=?";

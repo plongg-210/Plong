@@ -1,6 +1,6 @@
 <%-- 
     Document   : university-form
-    Created on : Feb 2, 2026, 3:57:51 PM
+    Created on : Mar 17, 2026, 2:26:31 AM
     Author     : PHI LONG
 --%>
 
@@ -12,14 +12,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <!--    
-           private String id, name, shortName, description;
-           private int foundedYear;
-           private String address, city, region, type;
-           private int totalStudents, totalFaculties;
-           private boolean isDraft;
-        -->
-        <form action="MainController" method="post">
+        <form action="MainController" method="POST">
             <input type="hidden" name="action" value="addUniversity"/>
             ID: <input type="text" name="id" value="${u.id}" /> <br/>
             Name: <input type="text" name="name" value="${u.name}" /> <br/>
@@ -32,11 +25,10 @@
             type: <input type="text" name="type" value="${u.type}" /> <br/>
             totalStudents: <input type="number" step="1" min="0" name="totalStudents" value="${u.totalStudents}" /> <br/>
             totalFaculties: <input type="number" step="1" min="0" name="totalFaculties" value="${u.totalFaculties}" /> <br/>
-            isDraft: <input type="checkbox" checked="${u.isDraft}" name="isDraft" /> <br/>
-            <input type="submit" value="Add" />
+            isDraft: <input type="checkbox" checked="${u.isDraft}" name="isDraft"/> <br/>
+            <input type="submit" value="Add"/>
         </form>
         <p style="color: green">${msg}</p>
         <p style="color: red">${error}</p>
-
     </body>
 </html>

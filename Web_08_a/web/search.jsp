@@ -52,37 +52,7 @@
             <th>Faculties</th>
             <th></th> 
         </thead>
-        <%--
-            if(list.size()==0){
-        %>
-            No data matching the search criteria found!
-        <%
-            } else {
-                for (UniversityDTO u : list) {
-        %>
-                    <tr>
-                        <td><%=u.getId()%></td>
-                        <td><%=u.getName()%></td>
-                        <td><%=u.getShortName()%></td>
-                        <td><%=u.getCity()%></td>
-                        <td><%=u.getRegion()%></td>
-                        <td><%=u.getType()%></td>
-                        <td><%=u.getFoundedYear()%></td> 
-                        <td><%=u.getTotalStudents()%></td>
-                        <td><%=u.getTotalFaculties()%></td>
-                        <td>
-                            <input type="submit" value="Update" style="display: <%=u.isIsDraft()?"block":"none"%>" />                                
-                        </td>
-                    </tr>  
-        <%
-                }
-            }
-        %>
-    </table>
-    <%  } else {
-            response.sendRedirect("login.jsp");
-        }
-        --%>
+
         <c:choose>
             <c:when test="empty list">
                 No data matching the search criteria found!
@@ -105,13 +75,14 @@
                             </c:if>
                         </td>
                         <td>
-                            <form action="MainController" method="POST"
-                                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa trường đại học này không?');">
-                                <input type="hidden" name="action" value="deleteUniversity"/>
-                                <input type="hidden" name="id" value="${u.id}" />
-                                <input type="hidden" name="keywords" value="${keywords}"/>
-                                <input type="submit" value="Delete"/>
+                            <form action="MainController" method="post"
+                                  onSubmit="return  confirm('Ban co chac mun xoa truong dai hoc nay khong ?');">
+                                <input type="hidden" name="action" value="deleteUniversity">
+                                <input type="hidden" name="id"  value="${id}">
+                                <input type="hidden" name="keywords" value="${keywords}">
+                                <input type="submit" value="Delete">
                             </form>
+                        </td>
                     </tr>
                 </c:forEach>
             </c:otherwise>

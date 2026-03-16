@@ -53,7 +53,7 @@ public class UniversityDAO {
         ArrayList<UniversityDTO> result = new ArrayList<>();
         try {
             Connection conn = DbUtils.getConnection();
-            String sql = "SELECT * FROM tblUniversity WHERE status=1 AND " + column + " LIKE ?";
+            String sql = "SELECT * FROM tblUniversity WHERE " + column + " LIKE ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, "%" + value + "%");
             System.out.println(ps.toString());
@@ -80,10 +80,10 @@ public class UniversityDAO {
         }
         return result;
     }
-    
-    public UniversityDTO searchByID(String ID){
+
+    public UniversityDTO searchByID(String ID) {
         ArrayList<UniversityDTO> a = searchByColum("id", ID);
-        if(a.size()>0){
+        if (a.size()>0) {
             return a.get(0);
         }
         return null;
@@ -96,23 +96,24 @@ public class UniversityDAO {
     public ArrayList<UniversityDTO> filterByName(String name) {
         return filterByColum("name", name);
     }
-    
+
     public boolean softDelete(String id) {
-        int result = 0;
         try {
             Connection conn = DbUtils.getConnection();
             String sql = "UPDATE tblUniversity SET status=0 WHERE id=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, id);
-            result = ps.executeUpdate();
+            System.out.println(id + "-" + sql);
+            return ps.executeUpdate() > 0;
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
-        return result>0;
+        return false;
     }
-    
-     public boolean add(UniversityDTO u) {
-         int result = 0;
+
+    public boolean add(UniversityDTO u) {
+        int result = 0;
         try {
             Connection conn = DbUtils.getConnection();
             String sql = "INSERT into tblUniversity values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -130,11 +131,11 @@ public class UniversityDAO {
             ps.setInt(11, u.getTotalFaculties());
             ps.setBoolean(12, u.isIsDraft());
             ps.setBoolean(13, true);
-           result = ps.executeUpdate();
+            result = ps.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return result>0;
+        return result > 0;
     }
 
 }

@@ -17,8 +17,8 @@
         <servlet-class>control.SearchController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeleteUniversityController</servlet-name>
-        <servlet-class>control.DeleteUniversityController</servlet-class>
+        <servlet-name>DeleteUniversity</servlet-name>
+        <servlet-class>control.DeleteUniversity</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddUniversityController</servlet-name>
@@ -41,8 +41,8 @@
         <url-pattern>/SearchController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeleteUniversityController</servlet-name>
-        <url-pattern>/DeleteUniversityController</url-pattern>
+        <servlet-name>DeleteUniversity</servlet-name>
+        <url-pattern>/DeleteUniversity</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddUniversityController</servlet-name>

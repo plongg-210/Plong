@@ -45,7 +45,7 @@ public class MainController extends HttpServlet {
         }else if(action.equals("search")){
             url = "SearchController";
         }else if(action.equals("deleteUniversity")){
-            url = "DeleteUniversityController";
+            url = "DeleteUniversity";
         }
         
         // Chuyen trang

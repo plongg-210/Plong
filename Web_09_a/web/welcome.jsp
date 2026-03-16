@@ -1,4 +1,4 @@
-    <%-- 
+<%-- 
     Document   : welcome.jsp
     Created on : Jan 26, 2026, 1:34:05 PM
     Author     : PHI LONG
@@ -14,16 +14,20 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <c:if test="${not empty user}">
-            <h1>Welcome, ${user.fullName}</h1>
-
-            <a href="MainController?action=logout">Logout</a><br/>
-            <a href="search.jsp">Search</a>
-        </c:if>
-
-        <c:if test="${empty user}">
-            <c:redirect url="login.jsp"/>
-        </c:if>
+        <c:choose>
+            <c:when test="${not empty user}">
+                <h1>
+                    Welcome, ${user.fullName}
+                </h1>
+                <a href="MainController?action=logout">Logout</a><br/>
+                <a href="search.jsp">Search</a>
+                <a href="university-form.jsp">Add</a>
+                
+            </c:when>
+            <c:otherwise>
+                <c:redirect url="login.jsp"/>
+            </c:otherwise>
+        </c:choose>
         <%--
         code cu trc khi doi
             UserDTO u = (UserDTO)session.getAttribute("user");
